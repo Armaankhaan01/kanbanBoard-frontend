@@ -9,7 +9,7 @@ A Kanban board application built with Vite, MongoDB, and Node.js. This applicati
 
 ### Front-end Features:
 
-1. **Homepage:** Display all tasks, segregated by their status groups: To Do, Doing, Done and custom.
+1. **Homepage:** Displaying all tasks, segregated by their status groups: To Do, Doing, Done and custom.
 2. **Task Card:** Showcasing the task title and description.
 3. **Add Task:** Integrated a form to create a new task, prompting users for the title and description of the task.
 4. **Edit Task:** Provided an option to edit an existing task’s title and description.
