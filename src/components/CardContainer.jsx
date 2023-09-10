@@ -22,7 +22,7 @@ const CardContainer = ({
     <div className="w-[90vw]">
       <Droppable id={category}>
         <div
-          className={` h-full min-w-[200px] me-5 ${color} rounded-xl p-5 relative my-5`}
+          className={` h-full min-w-[200px] me-5 ${color} rounded-xl p-5 relative my-5 max-w-[350px]`}
         >
           <div className="capitalize text-2xl absolute top-5 ">
             <h1 className="text-center w-full text-black">{category}</h1>

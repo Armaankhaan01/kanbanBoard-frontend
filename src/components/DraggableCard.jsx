@@ -66,7 +66,7 @@ function DraggableCard({ data, deleteCard, updateCard }) {
   };
 
   return (
-    <Card className="mt-16 md:w-96 mx-auto z-10" style={style}>
+    <Card className="mt-16 md:w-80 mx-auto z-10" style={style}>
       {isEdit ? (
         <CardBody>
           <div className="mb-2 py-2">
@@ -87,7 +87,7 @@ function DraggableCard({ data, deleteCard, updateCard }) {
         </CardBody>
       ) : (
         <CardBody {...attributes} {...listeners} ref={setNodeRef}>
-          <Typography variant="h5" color="blue-gray" className="mb-2">
+          <Typography variant="h6" color="blue-gray" className="mb-1">
             {data.name}
           </Typography>
           <Typography>{data.details}</Typography>

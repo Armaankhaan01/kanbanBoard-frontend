@@ -30,7 +30,7 @@ const NewCard = ({ category, handleClose, saveNewCard }) => {
     handleClose();
   };
   return (
-    <Card className="mt-16 md:w-96 mx-auto">
+    <Card className="mt-16 md:w-80 mx-auto">
       <CardBody>
         <h2 className="text-xl text-black text-center py-2">New Card</h2>
         <div className="mb-2 py-2">
