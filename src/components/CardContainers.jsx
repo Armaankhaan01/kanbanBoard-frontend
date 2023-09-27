@@ -1,5 +1,14 @@
 import { useEffect, useState } from "react"
-import { DndContext, closestCenter } from "@dnd-kit/core"
+import {
+  DndContext,
+  closestCenter,
+  KeyboardSensor,
+  useSensor,
+  useSensors,
+  MouseSensor,
+  TouchSensor,
+} from "@dnd-kit/core"
+import { SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable"
 import { Button, Input, Spinner } from "@material-tailwind/react"
 import CardContainer from "./CardContainer"
 import axios from "axios"
@@ -9,9 +18,18 @@ const CardContainers = () => {
   const [isLoading, setIsLoading] = useState(true)
   const [categoryName, setCategoryName] = useState("")
   const [cardData, setCardData] = useState([])
+
+  //Sensor Handling
+  const mouseSensor = useSensor(MouseSensor)
+  const touchSensor = useSensor(TouchSensor)
+  const keyboardSensor = useSensor(KeyboardSensor)
+
+  const sensors = useSensors(mouseSensor, touchSensor, keyboardSensor)
+
   const handleCategoryInput = (e) => {
     setCategoryName(e.target.value)
   }
+
   useEffect(() => {
     axios
       .get("https://kanban-board-backend-iota.vercel.app/api/cards")
@@ -39,7 +57,10 @@ const CardContainers = () => {
     if (categoryName) {
       const newCategory = { category: categoryName, color: "bg-pink-600" }
       axios
-        .post("https://kanban-board-backend-iota.vercel.app/api/categories", newCategory)
+        .post(
+          "https://kanban-board-backend-iota.vercel.app/api/categories",
+          newCategory
+        )
         .then((response) => {
           console.log("Category added:", response.data)
           setContainerName([...containerName, newCategory])
@@ -56,6 +77,7 @@ const CardContainers = () => {
     const newCardData = cardData.filter((item) => item.id !== cardId)
     setCardData(newCardData)
   }
+
   const saveNewCard = (newCard) => {
     // Create a new array with the new card added
     const updatedCardData = [...cardData, newCard]
@@ -83,6 +105,7 @@ const CardContainers = () => {
       setCardData(updatedCards)
     }
   }
+
   const onDragEnd = (event) => {
     const { active, over } = event
 
@@ -103,7 +126,10 @@ const CardContainers = () => {
 
       // Send a PUT request to update the card on the server
       axios
-        .put(`https://kanban-board-backend-iota.vercel.app/api/cards/${draggedCard._id}`, draggedCard)
+        .put(
+          `https://kanban-board-backend-iota.vercel.app/api/cards/${draggedCard._id}`,
+          draggedCard
+        )
         .then(function (response) {})
         .catch(function (error) {
           // Handle any errors that occurred during the request
@@ -121,8 +147,13 @@ const CardContainers = () => {
       </div>
     )
   }
+
   return (
-    <DndContext onDragEnd={onDragEnd} collisionDetection={closestCenter}>
+    <DndContext
+      onDragEnd={onDragEnd}
+      collisionDetection={closestCenter}
+      sensors={sensors}
+    >
       <div className="flex md:mx-5 mx-auto flex-col md:flex-row items-center md:items-start min-h-[100vh] overflow-auto">
         {containerName.map(({ category, color }) => (
           <CardContainer
@@ -147,7 +178,11 @@ const CardContainers = () => {
               name="categoryName"
               onChange={handleCategoryInput}
             />
-            <Button variant="outlined" onClick={addCategories} className="md:mt-8 ms-5 md:ms-0">
+            <Button
+              variant="outlined"
+              onClick={addCategories}
+              className="md:mt-8 ms-5 md:ms-0"
+            >
               +
             </Button>
           </div>
