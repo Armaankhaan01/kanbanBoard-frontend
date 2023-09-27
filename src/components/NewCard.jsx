@@ -1,34 +1,35 @@
-import { Card, CardBody, CardFooter } from "@material-tailwind/react";
-import axios from 'axios';
-import { useState } from "react";
-import { CancelIcon, SaveIcon } from "../Icon";
-const api_uri = `${import.meta.env.REACT_APP_BASE_URL}/api/cards`;
+import { Card, CardBody, CardFooter } from "@material-tailwind/react"
+import axios from "axios"
+import { useState } from "react"
+import { CancelIcon, SaveIcon } from "../Icon"
+const api_uri = `${import.meta.env.REACT_APP_BASE_URL}/api/cards`
 
 const NewCard = ({ category, handleClose, saveNewCard }) => {
-  const [name, setName] = useState("");
-  const [details, setDetails] = useState("");
+  const [name, setName] = useState("")
+  const [details, setDetails] = useState("")
   const handleSaveClick = () => {
     let newCard = {
       id: Date.now(),
       name,
       details,
       category,
-    };
-    saveNewCard(newCard);
-    axios.post("https://kanban-board-backend-iota.vercel.app/api/cards", newCard)
-    .then(function (response) {
-      // Handle the success response here (if needed)
-      // console.log(response.data);
-      handleClose();
-    })
-    .catch(function (error) {
-      // Handle any errors that occurred during the request
-      console.error(error);
-    });
-  };
+    }
+    saveNewCard(newCard)
+    handleClose()
+    axios
+      .post("https://kanban-board-backend-iota.vercel.app/api/cards", newCard)
+      .then(function (response) {
+        // Handle the success response here (if needed)
+        // console.log(response.data);
+      })
+      .catch(function (error) {
+        // Handle any errors that occurred during the request
+        console.error(error)
+      })
+  }
   const handleCancelClick = () => {
-    handleClose();
-  };
+    handleClose()
+  }
   return (
     <Card className="mt-16 md:w-80 mx-auto">
       <CardBody>
@@ -39,7 +40,7 @@ const NewCard = ({ category, handleClose, saveNewCard }) => {
             type="text"
             placeholder="Name"
             value={name}
-                        name="name"
+            name="name"
             onChange={(e) => setName(e.target.value)}
           />
         </div>
@@ -62,6 +63,6 @@ const NewCard = ({ category, handleClose, saveNewCard }) => {
         </div>
       </CardFooter>
     </Card>
-  );
-};
-export default NewCard;
+  )
+}
+export default NewCard
